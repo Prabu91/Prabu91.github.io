@@ -232,8 +232,8 @@ body {
 }
 .stats-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
   margin: 28px 0 20px;
 }
 .stat {
@@ -252,7 +252,18 @@ body {
   font-variant-numeric: tabular-nums;
 }
 .stat-num small { font-size: 1rem; color: var(--accent2); font-weight: 600; }
-.stat-label { font-size: 0.72rem; color: var(--fg2); margin-top: 2px; }
+.stat-label { font-size: 0.78rem; color: var(--fg2); margin-top: 4px; line-height: 1.55; }
+.stat { padding: 18px; border-top: 2px solid var(--tone, var(--accent)); transition: transform .2s, border-color .2s; }
+.stat:hover { transform: translateY(-2px); }
+.svc-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  background: color-mix(in srgb, var(--tone, var(--accent)) 14%, var(--bg3));
+  margin-bottom: 12px;
+}
+.svc-title { font-size: 0.92rem; font-weight: 600; color: var(--fg); }
 
 .now-card {
   display: flex;
@@ -321,7 +332,7 @@ body {
 .section-heading { font-size: 1rem; }
 
 @media (max-width: 900px) {
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .stats-row { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
   .featured-grid { grid-template-columns: 1fr; }
@@ -1045,14 +1056,16 @@ document.getElementById('linkLinkedin').href = DATA.links.linkedin;
 document.getElementById('linkEmail').href = DATA.links.email;
 
 // Stats, current role, featured projects
-const stats = [
-  { num: '4', suf: '+', label: 'Tahun pengalaman' },
-  { num: '80', suf: '%', label: 'Proses pelaporan lebih efisien' },
-  { num: '240', suf: '+', label: 'Sekolah dilayani lewat DMA' },
-  { num: '3.79', suf: '', label: 'IPK S1 Sistem Informasi' },
+const services = [
+  { icon: '💼', title: 'Billing & Collection', tone: 'var(--green)',
+    desc: 'Penagihan iuran, pengelolaan data tunggakan, dan rekonsiliasi di BPJS Kesehatan.' },
+  { icon: '🌐', title: 'Web Application', tone: 'var(--accent2)',
+    desc: 'Membangun aplikasi production untuk instansi pemerintah dan bisnis: Go-Turtles, DMA, V-Smart.' },
+  { icon: '🤖', title: 'Process Automation', tone: '#F59E0B',
+    desc: 'Bot yang memangkas pekerjaan manual: telecollecting, blast email tagihan, rekon iuran, cek nomor WA.' },
 ];
-document.getElementById('statsRow').innerHTML = stats.map(s =>
-  `<div class="stat"><div class="stat-num">${s.num}<small>${s.suf}</small></div><div class="stat-label">${s.label}</div></div>`).join('');
+document.getElementById('statsRow').innerHTML = services.map(s =>
+  `<div class="stat" style="--tone:${s.tone}"><div class="svc-icon">${s.icon}</div><div class="svc-title">${s.title}</div><div class="stat-label">${s.desc}</div></div>`).join('');
 
 const now = DATA.career[0];
 document.getElementById('nowCard').innerHTML = `
